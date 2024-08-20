@@ -1,23 +1,10 @@
-import React from "react";
+import { Table } from "./components/table/table";
 import "./App.css";
 
 function App() {
-  return (
-    <div className='App'>
-      <table>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Age</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>John</td>
-          <td>25</td>
-        </tr>
-      </table>
-    </div>
-  );
+  return <div className='App'>
+    <Table />
+  </div>;
 }
 
 export default App;
