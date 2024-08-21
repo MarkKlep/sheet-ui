@@ -31,11 +31,18 @@ export const Table = () => {
     <table>
       <thead>
         <tr>
+          {COLUMNS.map((_, index) => (
+            <td key={index}>{String.fromCharCode(65 + index)}</td>
+          ))}
+        </tr>
+
+        <tr>
           {COLUMNS.map((column) => (
             <td key={column}>{column}</td>
           ))}
         </tr>
       </thead>
+
       <tbody>
         {data.map((row, rowIndex) => (
           <Row

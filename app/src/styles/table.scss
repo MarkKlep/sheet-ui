@@ -2,6 +2,25 @@ table {
   width: 80%;
   border-spacing: 0;
 
+  //first row (letters` notation)
+  thead {
+  }
+
+  //second row (columns` names)
+  thead > tr:nth-child(2) {
+    height: 80px;
+    background-color: #c9daf8;
+    cursor: default;
+
+    td {
+      color: #fff;
+      font-weight: bold;
+      width: 80px;
+      vertical-align: bottom;
+      text-align: left;
+    }
+  }
+
   //cells
   td {
     height: 1.5rem;
@@ -30,21 +49,5 @@ table {
   .focused-cell {
     outline: 0.2rem solid #1a73e8;
     outline-offset: -0.1rem;
-  }
-
-  //first row
-  thead {
-    height: 80px;
-    background-color: #c9daf8;
-    cursor: default;
-
-    //header cells
-    td {
-      color: #fff;
-      font-weight: bold;
-      width: 80px;
-      vertical-align: bottom;
-      text-align: left;
-    }
   }
 }
