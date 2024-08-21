@@ -1,0 +1,50 @@
+table {
+  width: 80%;
+  border-spacing: 0;
+
+  //cells
+  td {
+    height: 1.5rem;
+    border: 1px solid #e1e1e1;
+    text-align: center;
+
+    input {
+      height: 100%;
+      margin: 0;
+      border: none;
+      box-sizing: border-box;
+      caret-color: transparent;
+
+      &:focus {
+        outline: none;
+        cursor: default;
+      }
+
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+
+  //focused cell
+  .focused-cell {
+    outline: 0.2rem solid #1a73e8;
+    outline-offset: -0.1rem;
+  }
+
+  //first row
+  thead {
+    height: 80px;
+    background-color: #c9daf8;
+    cursor: default;
+
+    //header cells
+    td {
+      color: #fff;
+      font-weight: bold;
+      width: 80px;
+      vertical-align: bottom;
+      text-align: left;
+    }
+  }
+}
