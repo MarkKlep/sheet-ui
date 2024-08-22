@@ -37,6 +37,11 @@ tr:nth-child(2) {
   cursor: default;
 }
 
+//first column
+td:first-child {
+  background-color: #e7f8ed;
+}
+
 //focused cell
 .focused-cell {
   outline: 0.2rem solid #1a73e8;
@@ -50,10 +55,10 @@ tr:nth-child(2) {
   font-weight: bold;
 }
 
-.coord-x {
+td.highlighted-row {
   background-color: #c4eed0;
 }
 
-.coord-y {
+td.highlighted-col {
   background-color: #c9daf8;
 }

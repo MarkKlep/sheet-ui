@@ -32,12 +32,13 @@ export const Cell: FC<CellProps> = (props) => {
           : "" +
             " " +
             (focusedCell?.row === rowIndex && cellIndex === 0
-              ? "coord-x"
+              ? "highlighted-row"
               : "") +
             " " +
-            (focusedCell?.cell === cellIndex && rowIndex === 0 ? "coord-y" : "")
+            (focusedCell?.cell === cellIndex && rowIndex === 0
+              ? "highlighted-col"
+              : "")
       }
-      style={{ backgroundColor: cellIndex === 0 ? "#e7f8ed" : "" }}
     >
       <input
         className={rowIndex + 1 === 2 ? "column-name" : ""}
