@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { COLUMNS, FIRST_N_ROWS } from "../../constants";
 import { Row } from "./row";
+import { genTableContent } from "../../utilities/table-content";
 import "../../styles/table.scss";
 
+const initTable = genTableContent();
+
 export const Table = () => {
-  const [data, setData] = useState<string[][]>(
-    Array(FIRST_N_ROWS).fill(Array(COLUMNS.length).fill("")),
-  );
+  const [data, setData] = useState<string[][]>(initTable);
   const [focusedCell, setFocusedCell] = useState<{
     row: number;
     cell: number;
@@ -29,32 +29,16 @@ export const Table = () => {
 
   return (
     <table>
-      <thead>
-        <tr>
-          {COLUMNS.map((_, index) => (
-            <td key={index}>{String.fromCharCode(65 + index)}</td>
-          ))}
-        </tr>
-
-        <tr>
-          {COLUMNS.map((column) => (
-            <td key={column}>{column}</td>
-          ))}
-        </tr>
-      </thead>
-
-      <tbody>
-        {data.map((row, rowIndex) => (
-          <Row
-            key={rowIndex}
-            row={row}
-            rowIndex={rowIndex}
-            focusedCell={focusedCell}
-            setFocusedCell={setFocusedCell}
-            handleFillCell={handleFillCell}
-          />
-        ))}
-      </tbody>
+      {data.map((row, rowIndex) => (
+        <Row
+          key={rowIndex}
+          row={row}
+          rowIndex={rowIndex}
+          focusedCell={focusedCell}
+          setFocusedCell={setFocusedCell}
+          handleFillCell={handleFillCell}
+        />
+      ))}
     </table>
   );
 };
