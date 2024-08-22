@@ -1,5 +1,5 @@
 table {
-  width: 80%;
+  width: 100%;
   border-spacing: 0;
 }
 
@@ -39,6 +39,7 @@ tr:nth-child(2) {
 
 //first column
 td:first-child {
+  width: 3rem;
   background-color: #e7f8ed;
 }
 
@@ -61,4 +62,17 @@ td.highlighted-row {
 
 td.highlighted-col {
   background-color: #c9daf8;
+}
+
+tr:last-child td {
+  height: 2.5rem;
+  background-color: #dadce0;
+
+  div {
+    height: 100%;
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+    align-items: center;
+  }
 }

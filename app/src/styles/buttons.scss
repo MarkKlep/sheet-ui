@@ -1,0 +1,14 @@
+.table-button {
+  height: 80%;
+  width: 7rem;
+  background-color: transparent;
+  color: #202124;
+  border-radius: 6px;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #edf2fa;
+    transition: background-color 0.3s ease;
+  }
+}

@@ -1,44 +1,45 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Row } from "./row";
-import { genTableContent } from "../../utilities/table-content";
+import { TableButton } from "../ui/table-button";
 import "../../styles/table.scss";
 
-const initTable = genTableContent();
+type TableProps = {
+  tableData: any[][];
+};
 
-export const Table = () => {
-  const [data, setData] = useState<string[][]>(initTable);
-  const [focusedCell, setFocusedCell] = useState<{
-    row: number;
-    cell: number;
-  } | null>(null);
+export const Table: FC<TableProps> = (props) => {
+  const [revealedRows, setRevealedRows] = useState(13);
 
-  const handleFillCell = (
-    rowIndex: number,
-    cellIndex: number,
-    cellData: string,
-  ) => {
-    const updatedTable = data.map((row, currRowIndex) =>
-      rowIndex === currRowIndex
-        ? row.map((cell, currCellIndex) =>
-            cellIndex === currCellIndex ? cellData : cell,
-          )
-        : row,
-    );
-    setData(updatedTable);
+  const { tableData } = props;
+
+  const handleRevealAll = () => {
+    setRevealedRows(tableData.length);
+  };
+
+  const handleRevealMore = () => {
+    setRevealedRows((prev) => Math.min(prev + 10, tableData.length));
+  };
+
+  const handleRevealLess = () => {
+    setRevealedRows((prev) => Math.max(prev - 10, 13));
   };
 
   return (
     <table>
-      {data.map((row, rowIndex) => (
-        <Row
-          key={rowIndex}
-          row={row}
-          rowIndex={rowIndex}
-          focusedCell={focusedCell}
-          setFocusedCell={setFocusedCell}
-          handleFillCell={handleFillCell}
-        />
-      ))}
+      {tableData
+        .map((row, rowIndex) => (
+          <Row key={rowIndex} row={row} rowIndex={rowIndex} />
+        ))
+        .slice(0, revealedRows)}
+      <tr>
+        <td colSpan={tableData[0].length} className='reveal-button-container'>
+          <div>
+            <TableButton onClick={handleRevealMore}>Show More</TableButton>
+            <TableButton onClick={handleRevealLess}>Show Less</TableButton>
+            <TableButton onClick={handleRevealAll}>Show All</TableButton>
+          </div>
+        </td>
+      </tr>
     </table>
   );
 };

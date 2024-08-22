@@ -1,0 +1,40 @@
+.panel {
+  width: 80%;
+  height: 5rem;
+  background-color: #edf2fa;
+  margin: 2.5rem auto;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 7rem;
+  align-items: center;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  label {
+    color: #202124;
+    text-align: center;
+    margin-top: 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  select {
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #fff;
+    color: #202124;
+    font-size: 1rem;
+    padding: 0 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

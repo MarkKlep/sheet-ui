@@ -1,28 +1,25 @@
-import { FC } from "react";
+import { FC, useContext, useState } from "react";
+import { FocusedCellContext } from "../../store/focused-cell-provider";
 import "../../styles/table.scss";
 
 type CellProps = {
   cellData: string;
   rowIndex: number;
   cellIndex: number;
-  focusedCell: { row: number; cell: number } | null;
-  setFocusedCell: (cell: { row: number; cell: number } | null) => void;
-  handleFillCell: (
-    rowIndex: number,
-    cellIndex: number,
-    cellData: string,
-  ) => void;
 };
 
 export const Cell: FC<CellProps> = (props) => {
-  const {
-    cellData,
-    rowIndex,
-    cellIndex,
-    focusedCell,
-    setFocusedCell,
-    handleFillCell,
-  } = props;
+  const [text, setText] = useState(props.cellData);
+
+  const { rowIndex, cellIndex } = props;
+
+  const { focusedCell, setFocusedCell } = useContext(FocusedCellContext)!;
+
+  const handleInputCell = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    setText(value);
+  };
 
   return (
     <td
@@ -41,13 +38,14 @@ export const Cell: FC<CellProps> = (props) => {
       }
     >
       <input
+        disabled={cellIndex === 0}
         className={rowIndex + 1 === 2 ? "column-name" : ""}
         style={{ color: cellIndex === 0 ? "#000" : "" }}
         type='text'
-        value={cellData}
+        value={text}
         onFocus={() => setFocusedCell({ row: rowIndex, cell: cellIndex })}
         onBlur={() => setFocusedCell(null)}
-        onChange={(e) => handleFillCell(rowIndex, cellIndex, e.target.value)}
+        onChange={handleInputCell}
       />
     </td>
   );

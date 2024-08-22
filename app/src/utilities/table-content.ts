@@ -1,19 +1,20 @@
-import { COLUMNS, FIRST_N_ROWS } from "../constants";
+type TableRow = {
+  [key: string]: string;
+};
 
-export function genTableContent() {
-  const table = Array(FIRST_N_ROWS).fill(Array(COLUMNS.length).fill(""));
+export function formTable(sheetData: any): any[][] {
+  const columns = Object.keys(sheetData[0]);
 
-  // numberedTable = table + numbered column
-  const numberedTable = Array(FIRST_N_ROWS)
-    .fill(null)
-    .map((_, index) => [String(index), ...table[index]]);
-
-  // init data(names of columns) to numberedTable
-  numberedTable[0] = [
+  const tableAlphabeticNumiration = [
     "",
-    ...COLUMNS.map((_, index) => String.fromCharCode(65 + index)),
+    ...columns.map((_, index) => String.fromCharCode(65 + index)),
   ];
-  numberedTable[1] = [1, ...COLUMNS];
+  const tableHeader = [1, ...columns];
+  const tableContent = sheetData.map((row: TableRow, index: number) => [
+    index + 2,
+    ...columns.map((col) => (row[col] === undefined ? "" : row[col])),
+  ]);
 
-  return numberedTable;
+  const table = [tableAlphabeticNumiration, tableHeader, ...tableContent];
+  return table;
 }
