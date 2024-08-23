@@ -5,7 +5,7 @@ table {
 
 //cells
 td {
-  height: 1.5rem;
+  height: 5rem;
   border: 1px solid #e1e1e1;
   text-align: center;
   overflow: hidden;
@@ -33,7 +33,7 @@ td {
 //second row (columns` names)
 tr:nth-child(2) {
   height: 80px;
-  background-color: #c9daf8;
+  background-color: #6d9eeb;
   cursor: default;
 }
 
@@ -75,4 +75,17 @@ tr:last-child td {
     justify-content: center;
     align-items: center;
   }
+}
+
+input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.invalid-data {
+  background-color: #f8d7da;
 }
