@@ -1,16 +1,19 @@
-import { FC, useState } from "react";
+import { FC, useState, memo } from "react";
 import { Row } from "./row";
 import { TableButton } from "../ui/table-button";
 import "../../styles/table.scss";
+import "../../styles/buttons.scss";
 
 type TableProps = {
   tableData: any[][];
 };
 
-export const Table: FC<TableProps> = (props) => {
-  const [revealedRows, setRevealedRows] = useState(13);
+const firstNRows = 13;
 
+const TableComponent: FC<TableProps> = (props) => {
   const { tableData } = props;
+
+  const [revealedRows, setRevealedRows] = useState(firstNRows);
 
   const handleRevealAll = () => {
     setRevealedRows(tableData.length);
@@ -26,11 +29,9 @@ export const Table: FC<TableProps> = (props) => {
 
   return (
     <table>
-      {tableData
-        .map((row, rowIndex) => (
-          <Row key={rowIndex} row={row} rowIndex={rowIndex} />
-        ))
-        .slice(0, revealedRows)}
+      {tableData.slice(0, revealedRows).map((row, rowIndex) => (
+        <Row key={rowIndex} row={row} rowIndex={rowIndex} />
+      ))}
       <tr>
         <td colSpan={tableData[0].length} className='reveal-button-container'>
           <div>
@@ -43,3 +44,5 @@ export const Table: FC<TableProps> = (props) => {
     </table>
   );
 };
+
+export const Table = memo(TableComponent);

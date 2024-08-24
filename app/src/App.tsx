@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext, useMemo } from "react";
+import { TableDataContext } from "./store/table-data-provider";
 import * as XLSX from "xlsx";
 import { formTable } from "./utilities/table-content";
 import { Table } from "./components/table/table";
@@ -7,13 +8,14 @@ import { Panel } from "./components/ui/panel";
 import { XLSXLoader } from "./components/ui/xlsx-loader";
 import "./App.css";
 
-//usememo
-//readstream
-
 function App() {
   const [sheets, setSheets] = useState<string[]>([]);
   const [workbook, setWorkbook] = useState<XLSX.WorkBook | null>(null);
-  const [tableData, setTableData] = useState<any[][]>([]);
+
+  const { tableData, setTableData } = useContext(TableDataContext)!;
+
+  const memoizedSheets = useMemo(() => sheets, [sheets]);
+  const memoizedTableData = useMemo(() => tableData, [tableData]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -50,12 +52,16 @@ function App() {
     <div className='App'>
       <Panel>
         <XLSXLoader handler={handleFileUpload} />
-        {sheets.length > 0 && (
-          <DropdownList list={sheets} handler={handlePickSheet} />
+        {memoizedSheets.length > 0 && (
+          <DropdownList list={memoizedSheets} handler={handlePickSheet} />
         )}
       </Panel>
 
-      {tableData.length > 0 && <Table tableData={tableData} />}
+      {memoizedTableData.length === 0 ? (
+        <p>No data to display</p>
+      ) : (
+        <Table tableData={memoizedTableData} />
+      )}
     </div>
   );
 }

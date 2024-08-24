@@ -3,6 +3,8 @@ type TableRow = {
 };
 
 export function formTable(sheetData: any): any[][] {
+  if (sheetData.length === 0) return [];
+
   const columns = Object.keys(sheetData[0]);
 
   const tableAlphabeticNumiration = [
