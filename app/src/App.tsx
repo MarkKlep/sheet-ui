@@ -4,6 +4,7 @@ import { formTable } from "./utilities/table-content";
 import { Table } from "./components/table/table";
 import { DropdownList } from "./components/ui/dropdown-list";
 import { Panel } from "./components/ui/panel";
+import { XLSXLoader } from "./components/ui/xlsx-loader";
 import "./App.css";
 
 //usememo
@@ -48,8 +49,7 @@ function App() {
   return (
     <div className='App'>
       <Panel>
-        <label htmlFor='file-input'>Upload an excel file:</label>
-        <input type='file' id='file-input' onChange={handleFileUpload} />
+        <XLSXLoader handler={handleFileUpload} />
         {sheets.length > 0 && (
           <DropdownList list={sheets} handler={handlePickSheet} />
         )}

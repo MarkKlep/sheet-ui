@@ -31,18 +31,47 @@ export const Cell: FC<CellProps> = (props) => {
     const cellValue = e.target.value;
     const cellType = e.target.getAttribute("data-type");
 
+    //cellType === "number"
     if (cellType === "number") {
       const isValid = /^\d*(\.\d+)?$/.test(cellValue);
       setInvalidData(!isValid);
-    } else if (cellType === "boolean") {
-      setCellData(e.target.checked);
-      return;
-    } else if (cellType === "string") {
-      console.log("cellValue = ", cellValue);
       setCellData(cellValue);
-      return;
     }
-    console.log("-------------------------------");
+    //cellType === "boolean"
+    else if (cellType === "boolean") {
+      if (inputType === "checkbox") {
+        setCellData(e.target.checked);
+        return;
+      }
+
+      //!!!cell was a checkbox but user starts inputing some text data
+      setInvalidData(true);
+      setCellData(cellValue);
+    }
+    //cellType === "string"
+    else {
+      setCellData(cellValue);
+    }
+  };
+
+  const handleBlurCell = () => {
+    const cellType = inputRef.current?.getAttribute("data-type");
+
+    //cell is a checkbox but user input there some text -> outofix when focus is demolished
+    if (cellType === "boolean" && inputType === "text") {
+      setInputType("checkbox");
+      setInvalidData(false);
+    }
+
+    setFocusedCell(null);
+  };
+
+  const handleFocusCell = () => {
+    setFocusedCell({ row: rowIndex, cell: cellIndex });
+  };
+
+  const handleKeyDownKeys = () => {
+    setInputType("text");
   };
 
   const cellStyles = [
@@ -51,7 +80,12 @@ export const Cell: FC<CellProps> = (props) => {
       : "",
     focusedCell?.row === rowIndex && cellIndex === 0 ? "highlighted-row" : "",
     focusedCell?.cell === cellIndex && rowIndex === 0 ? "highlighted-col" : "",
-    invalidData ? "invalid-data" : "",
+    invalidData &&
+    focusedCell?.row === rowIndex &&
+    focusedCell?.cell === cellIndex
+      ? "inputing-invalid-data"
+      : "",
+    invalidData ? "invalid-cell" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -62,20 +96,21 @@ export const Cell: FC<CellProps> = (props) => {
         ref={inputRef}
         className={rowIndex + 1 === 2 ? "column-name" : ""}
         style={{ color: cellIndex === 0 ? "#000" : "" }}
-        onFocus={() => {
-          setFocusedCell({ row: rowIndex, cell: cellIndex });
-          console.log("inputType = ", inputType);
-        }}
-        onBlur={() => setFocusedCell(null)}
+        onFocus={handleFocusCell}
+        onBlur={handleBlurCell}
         type={inputType}
         {...(inputType === "checkbox" && { checked: cellData as boolean })}
         {...(inputType === "checkbox" && {
-          onKeyDown: () => setInputType("text"),
+          onKeyDown: handleKeyDownKeys,
         })}
         value={cellData as string}
         onChange={handleInputCell}
         data-type={cellDataType}
       />
+
+      {rowIndex + 1 === 2 && cellIndex > 0 && (
+        <div className='sort-item'>123</div>
+      )}
     </td>
   );
 };
