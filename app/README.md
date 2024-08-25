@@ -23,3 +23,23 @@ npm install
 ```bash
 npm start
 ```
+
+## For devs
+
+1. **To find some errors in source code**
+
+```bach
+    npm run lint
+```
+
+2. **To find some errors in source code AND try to fix it immediately**
+
+```bach
+    npm run lint:fix
+```
+
+3. **To format code in files**
+
+```bach
+    npm run format
+```
