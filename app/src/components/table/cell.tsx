@@ -40,7 +40,7 @@ export const Cell: FC<CellProps> = (props) => {
 
     //cellType === "number"
     if (cellType === "number") {
-      const isValid = /^(-)?\d+(\.\d+)?$/.test(cellValue);
+      const isValid = /^-?(0|[1-9]\d*)(\.\d+)?$/.test(cellValue);
       setInvalidData(!isValid);
       setCellData(cellValue);
     }
